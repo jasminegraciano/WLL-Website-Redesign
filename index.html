@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Placement</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+        .container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid black;
+            width: 60%;
+        }
+        .button {
+            padding: 8px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Select Your Language</h2>
+    <select id="languageDropdown">
+        <option value="" disabled selected>Select a language</option>
+        <optgroup label="✅ Offered Languages">
+            <option value="French">French 🇫🇷</option>
+            <option value="Italian">Italian 🇮🇹</option>
+            <option value="Spanish">Spanish 🇪🇸</option>
+            <option value="German">German 🇩🇪</option>
+            <option value="Arabic">Arabic 🇸🇦</option>
+            <option value="Portuguese">Portuguese 🇵🇹</option>
+            <option value="Latin">Latin 📖</option>
+        </optgroup>
+        <optgroup label="❌ Not Offered (Waiver Required)">
+            <option value="Hebrew">Hebrew 🇮🇱</option>
+            <option value="ASL">American Sign Language 🤟</option>
+            <option value="Chinese">Chinese 🇨🇳</option>
+            <option value="Greek">Greek 🇬🇷</option>
+            <option value="Japanese">Japanese 🇯🇵</option>
+            <option value="Russian">Russian 🇷🇺</option>
+            <option value="Other">🌍 Other (Provide Documentation for Waiver)</option>
+        </optgroup>
+    </select>
+
+    <br><br>
+
+    <!-- Placement Method Dropdown -->
+    <div id="placementMethodContainer" class="hidden">
+        <h3>Choose Your Placement Method</h3>
+        <select id="placementMethodDropdown">
+            <option value="" disabled selected>Select a method</option>
+            <option value="PLACE Test">📌 PLACE Test (Standard Placement)</option>
+            <option value="PLACE Waiver Exam">📜 PLACE Waiver Exam</option>
+            <option value="Advanced Placement (AP)">📜 Advanced Placement (AP)</option>
+            <option value="CLEP Exam">📖 CLEP Exam</option>
+            <option value="High School Placement">🎓 High School Placement</option>
+            <option value="Seal of Biliteracy">🏆 Seal of Biliteracy</option>
+            <option value="Study Abroad">✈️ Study Abroad</option>
+        </select>
+    </div>
+
+    <!-- Placement Method Information -->
+    <div id="placementMethodText" class="container hidden">
+        <h3>Placement Method Information</h3>
+        <p id="placementMethodResult"></p>
+    </div>
+
+    <!-- PLACE Test Score Selection -->
+    <div id="scoreContainer" class="container hidden">
+        <h3>Select Your Score</h3>
+        <select id="scoreDropdown">
+            <option value="" disabled selected>Select your score</option>
+            <option value="0-1">Novice Low or Beginner (Score 0-1)</option>
+            <option value="2">Novice Mid (Score 2)</option>
+            <option value="3">Novice High (Score 3)</option>
+            <option value="4">Intermediate Low (Score 4)</option>
+            <option value="5">Intermediate High (Score 5)</option>
+        </select>
+    </div>
+
+    <!-- PLACE Test Placement Result -->
+    <div id="placementResult" class="container hidden">
+        <h3>Placement Result</h3>
+        <p id="resultText"></p>
+    </div>
+
+    <!-- PLACE Waiver Exam Score Selection -->
+    <div id="placeWaiverScoreContainer" class="container hidden">
+        <h3>PLACE Waiver Exam Score</h3>
+        <select id="placeWaiverScoreDropdown">
+            <option value="" disabled selected>Select your score</option>
+            <option value="3">Novice High (min score 3 on all skill areas)</option>
+            <option value="4">Intermediate Low (min score 4 on all skill areas)</option>
+        </select>
+    </div>
+
+    <!-- PLACE Waiver Placement Result -->
+    <div id="placeWaiverResult" class="container hidden">
+        <h3>Placement Waiver Result</h3>
+        <p id="placeWaiverText"></p>
+    </div>
+
+    <!-- AP / CLEP Score Selection -->
+    <div id="examScoreContainer" class="container hidden">
+        <h3>Select Your Exam Score</h3>
+        <select id="examScoreDropdown">
+            <option value="" disabled selected>Select your exam score</option>
+        </select>
+    </div>
+
+    <!-- AP / CLEP Placement Result -->
+    <div id="examResultContainer" class="container hidden">
+        <h3>Exam Placement Result</h3>
+        <p id="examResultText"></p>
+    </div>
+
+    <!-- High School Placement -->
+    <div id="highSchoolExperienceContainer" class="container hidden">
+        <h3>High School Experience Level</h3>
+        <select id="highSchoolExperienceDropdown">
+            <option value="" disabled selected>Select your level</option>
+            <option value="1">Level 1</option>
+            <option value="2">Level 2</option>
+            <option value="3">Level 3</option>
+            <option value="4">Level 4</option>
+        </select>
+    </div>
+
+    <!-- High School Placement Result -->
+    <div id="highSchoolPlacementResult" class="container hidden">
+        <h3>Placement Result</h3>
+        <p id="highSchoolResultText"></p>
+    </div>
+
+    <!-- Study Abroad -->
+    <div id="studyAbroadContainer" class="container hidden">
+        <h3>Did you complete a study abroad program in this language?</h3>
+        <select id="studyAbroadDropdown">
+            <option value="" disabled selected>Select an option</option>
+            <option value="yes">Yes, I studied abroad</option>
+            <option value="no">No, I did not study abroad</option>
+        </select>
+    </div>
+
+    <!-- Study Abroad Result -->
+    <div id="studyAbroadResult" class="container hidden">
+        <h3>Study Abroad Results</h3>
+        <p id="studyAbroadResultText"></p>
+    </div>
+
+    <!-- Seal of Biliteracy -->
+    <div id="sealBiliteracyContainer" class="container hidden">
+        <h3>Seal of Biliteracy</h3>
+        <p id="sealBiliteracyText"></p>
+    </div>
+
+    <!-- Waiver Information (For Unoffered Languages) -->
+    <div id="waiverContainer" class="container hidden">
+        <h3>Waiver Information</h3>
+        <p id="waiverText"></p>
+    </div>
+
+</body>
+</html>
+
