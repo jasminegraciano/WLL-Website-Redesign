@@ -30,7 +30,7 @@ $(document).ready(function () {
                 <p><strong>${selectedLang} is not offered as a course at this time.</strong></p>
                 <p>To receive a waiver, you must:</p>
                 <ul>
-                    <li>✅ Submit official documentation</li>
+                    <li>✅ Submit official documentation to admissions@southernct.edu</li>
                     <li>✅ Take a proficiency test</li>
                 </ul>
                 <p>If approved, you may receive credit for WLL101 or WLL200.</p>
@@ -83,8 +83,12 @@ $(document).ready(function () {
                 let text = selectedLangCode ? `
                     <p><strong>Eligible for course credit:</strong></p>
                     <p>If your Seal of Biliteracy is recognized, you may waive WLL101 or WLL200.</p>
-                    <p>Submit official documentation to receive credit.</p>
-                    <button class="button">Documentation Submission</button>
+                    <p>Submit official documentation to admissions@southernct.edu to receive credit.</p>
+
+
+                  <a href="mailto:admissions@southernct.edu">
+                  <button class="button">Documentation Submission</button>
+                    </a>
                 ` : `
                     <h4><strong>Example: Student Selects "Seal of Biliteracy" for a Language Not Offered</strong></h4>
                     <p>Seal of Biliteracy for this language is not applicable.</p>
@@ -144,9 +148,9 @@ $('#placeWaiverScoreDropdown').change(function () {
 
         // Generate correct placement message
         if (selectedScore.includes("AP")) {
-            examText = `AP Exam Result: You will receive credit for ${selectedLangCode} ${selectedScore.includes("4-5") ? "101 & 200" : "101"}. You may waive ${selectedLangCode} ${selectedScore.includes("4-5") ? "101 & 200" : "101"}.`;
+            examText = `AP Exam Result: You will receive credit for ${selectedLangCode} ${selectedScore.includes("4-5") ? "101 & 200" : "101"}. You may waive ${selectedLangCode} ${selectedScore.includes("4-5") ? "101 & 200" : "101"}. Please submit your scores to admissions@southernct.edu.`;
         } else if (selectedScore.includes("CLEP")) {
-            examText = `CLEP Exam Result: You will receive credit for ${selectedLangCode} ${selectedScore.includes("66") ? "101 & 200" : "100 & 101"}. You may waive ${selectedLangCode} ${selectedScore.includes("66") ? "101 & 200" : "101"}.`;
+            examText = `CLEP Exam Result: You will receive credit for ${selectedLangCode} ${selectedScore.includes("66") ? "101 & 200" : "100 & 101"}. You may waive ${selectedLangCode} ${selectedScore.includes("66") ? "101 & 200" : "101"}. Please submit your scores to admissions@southernct.edu.`;
         }
         if (examText) {
             $('#resultText').text(examText);

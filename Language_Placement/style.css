@@ -1,0 +1,37 @@
+body { font-family: "Open Sans", Helvetica, Arial, sans-serif; text-align: center; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        .question, .start, .end { display: none; }
+        .navigation { margin-top: 20px; display: flex; justify-content: space-between;}
+        .hidden { display: none; }
+        .btn-selected { background-color: #003399; color: yellow !important; }
+        .btn-nav { width: 48%; background-color:#003399}
+        .btn-gen {background-color:#003399}
+        #options button {color: #003399; border: 1px solid #003399; }
+        #options button:hover { background-color: #F5C446;color: white;}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    margin: auto;
+}
+
+select {
+    width: 60%;
+    padding: 10px;
+    margin: 10px;
+}
+
+#resultBox {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e3e3e3;
+    border-radius: 5px;
+    display: none;
+}
+
+.hidden {
+    display: none;
+}

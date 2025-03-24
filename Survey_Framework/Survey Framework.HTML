@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Career Questionnaire</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { font-family: "Open Sans", Helvetica, Arial, sans-serif; text-align: center; }
+        .container { max-width: 600px; margin: auto; padding: 20px; }
+        .question, .start, .end { display: none; }
+        .navigation { margin-top: 20px; display: flex; justify-content: space-between;}
+        .hidden { display: none; }
+        .btn-selected { background-color: #003399; color: yellow !important; }
+        .btn-nav { width: 48%; background-color:#003399}
+        .btn-gen {background-color:#003399}
+        #options button {color: #003399; border: 1px solid #003399; }
+        #options button:hover { background-color: #F5C446;color: white;}
+
+    </style>
+</head>
+<body>
+    <!--For accordion utilization-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container text-center">
+        <div id="start" class="start">
+            <h2>Welcome to the Language Career Questionnaire</h2>
+            <p>This survey will help you determine potential career paths based on your language interests and skills.</p>
+            <button class="btn btn-primary btn-lg w-100 btn-gen" onclick="nextQuestion()">Start</button>
+        </div>
+
+        <div id="questions" class="question">
+            <h3 id="question-text"></h3>
+            <div id="options" class="d-grid gap-2"></div>
+            <div class="navigation mt-3">
+                <button id="prev" class="btn btn-primary btn-nav" onclick="prevQuestion()">&#8592; Previous</button>
+                <button id="next" class="btn btn-primary btn-nav" onclick="nextQuestion()">Next &#8594;</button>
+            </div>
+        </div>
+
+        <div id="end" class="end">
+            <h2>Survey Complete</h2>
+            <p>Thank you for taking the questionnaire!</p>
+            <p>Here are a few career paths we think are right for you!</p>
+            <div class="accordion" id="jobAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="jobHeading">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#jobDetails" aria-expanded="false" aria-controls="jobDetails">
+                            Example Career: Translator
+                        </button>
+                    </h2>
+                    <div id="jobDetails" class="accordion-collapse collapse" aria-labelledby="jobHeading">
+                        <div class="accordion-body">
+                            <p><strong>Job Description:</strong> Translators convert written materials from one language to another while preserving meaning, tone, and intent.</p>
+                            <p><a href="https://www.southernct.edu/academics/programs/french-7-12-bs" target="_blank">Click here to view Major</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        
+            <button class="btn btn-primary btn-lg w-100 mt-3 btn-gen" onclick="restartSurvey()">Restart</button>
+        </div>
+
+    <script>
+        //This identifies which questions can have multiple answers
+        const multiSelectQuestions = [0, 1, 7];
+        const questions = [
+            { text: "What language are you learning/do you already know?", options: ["Italian", "German", "French", "Hebrew", "Arabic", "Chinese", "Russian", "Korean", "Japanese", "Spanish", "Latin", "Greek", "ASL", "Portuguese"] },
+            { text: "Which sector could you imagine yourself in?", options: ["Academic", "Corporate", "Small Business", "Government", "Not for profit", "Not sure"] },
+            { text: "Would you like to work remotely?", options: ["Yes", "Maybe", "No"] },
+            { text: "Are you a 'people' person? (chatty, outgoing)", options: ["Definitely not", "Probably not", "Might or might not", "Probably yes", "Definitely yes"] },
+            { text: "Do you like to work with texts (reading, writing, editing, etc.)?", options: ["Yes", "Maybe", "No"] },
+            { text: "Do you like to work with numbers?", options: ["Yes", "Maybe", "No"] },
+            { text: "Do you like to work in a team or do you prefer to work alone?", options: ["Team", "I don't care", "Alone"] },
+            { text: "Do you like to (check all that apply):", options: ["Teach, educate, train", "Analyze, solve, think through", "Communicate, convince, organize"] },
+            { text: "Do you like to travel?", options: ["Yes", "Maybe", "No"] },
+            { text: "Do you consider yourself a problem solver?", options: ["Yes", "Maybe", "No"] },
+            { text: "Are you a leader?", options: ["Yes", "Maybe", "No"] }
+        ];
+
+        let currentQuestion = -1;
+        let selectedOptions = {};
+        
+        //Shows buttons differently based on which question number we're on
+        function showQuestion() {
+            if (currentQuestion === -1) {
+                document.getElementById('start').style.display = 'block';
+                document.getElementById('questions').style.display = 'none';
+                document.getElementById('end').style.display = 'none';
+            } else if (currentQuestion >= questions.length) {
+                document.getElementById('start').style.display = 'none';
+                document.getElementById('questions').style.display = 'none';
+                document.getElementById('end').style.display = 'block';
+            } else {
+                document.getElementById('start').style.display = 'none';
+                document.getElementById('questions').style.display = 'block';
+                document.getElementById('end').style.display = 'none';
+                
+                document.getElementById('question-text').textContent = `Q ${currentQuestion + 1}/${questions.length}: ${questions[currentQuestion].text}`;
+                const optionsContainer = document.getElementById('options');
+                optionsContainer.innerHTML = "";
+                
+                questions[currentQuestion].options.forEach(option => {
+                    let button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('btn', 'btn-outline-primary', 'w-100');
+                    button.onclick = () => selectOption(option, button);
+                    
+                    if (selectedOptions[currentQuestion]?.includes(option)) {
+                        button.classList.add('btn-selected');
+                    }
+                    
+                    optionsContainer.appendChild(button);
+                });
+
+                document.getElementById('prev').classList.toggle('hidden', currentQuestion === 0);
+                document.getElementById('next').textContent = currentQuestion === questions.length - 1 ? 'Finish' : 'Next →';
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function prevQuestion() {
+            currentQuestion--;
+            showQuestion();
+        }
+
+        function restartSurvey() {
+            currentQuestion = -1;
+            selectedOptions = {};
+            showQuestion();
+        }
+
+        function selectOption(option, button) {
+            if (multiSelectQuestions.includes(currentQuestion)) {
+                selectedOptions[currentQuestion] = selectedOptions[currentQuestion] || [];
+                if (selectedOptions[currentQuestion].includes(option)) {
+                    selectedOptions[currentQuestion] = selectedOptions[currentQuestion].filter(o => o !== option);
+                    button.classList.remove('btn-selected');
+                } else {
+                    selectedOptions[currentQuestion].push(option);
+                    button.classList.add('btn-selected');
+                }
+            } else {
+                selectedOptions[currentQuestion] = [option];
+                document.querySelectorAll('#options button').forEach(btn => btn.classList.remove('btn-selected'));
+                button.classList.add('btn-selected');
+            }
+        }
+
+        showQuestion();
+    </script>
+</body>
+</html>
