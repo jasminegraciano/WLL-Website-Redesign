@@ -161,4 +161,50 @@ $('#placeWaiverScoreDropdown').change(function () {
             $('#placementResult').addClass('hidden'); // Hide if no selection
         }
     }); 
+    // Step 6: Handle Highschool Experience Score Selection
+    $('#highSchoolExperienceDropdown').change(function ()  {
+        let selectedScore = $(this).val();
+        let experienceText = "";
+
+        if (selectedScore === "1") {
+            experienceText = `You should enroll in ${selectedLangCode} 100.`;
+        } 
+        else if (selectedScore === "2") {
+            experienceText = `You may waive ${selectedLangCode} 100 and enroll in ${selectedLangCode} 101.`;
+        }
+        else{
+            experienceText = `You may waive both ${selectedLangCode} 100 and ${selectedLangCode} 101 as well as enroll in 200-level courses in ${selectedLangCode}.`;
+        }
+
+        if (experienceText) {
+            $('#highSchoolResultText').html(experienceText);
+            $('#highSchoolPlacementResult').removeClass('hidden');  
+        } else {
+            $('#highSchoolPlacementResult').addClass('hidden');  
+        }
+
+    });
+
+    // Step 7: Handle Study Abroad Score Selection
+    $('#studyAbroadDropdown').change(function ()  {
+        let selectedScore = $(this).val();
+        let abroadText = "";
+        if (selectedScore === "yes") {
+            abroadText = `You may request a waiver of the general education Multilingual Communication requirement by contacting admissions@southernct.edu.`;
+        } 
+        else{
+            abroadText = `You will not be able to waive the general education Multilingual Communication requirement. For more information regarding SCSU's Study Abroad programs, please visit https://www.southernct.edu/academics/study-abroad.`;
+        }
+
+        if (abroadText) {
+            $('#studyAbroadResultText').text(abroadText);
+            $('#studyAbroadResult').removeClass('hidden'); 
+            $('#studyAbroadContainer').after($('#studyAbroadResult'));  
+        } 
+        else {
+            $('#studyAbroadResult').addClass('hidden'); 
+        }
+
+        
+    });
 });
