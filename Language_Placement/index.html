@@ -108,11 +108,6 @@ select, .container, .button {
   border-radius: 8px;
 }
 
-/*  Google Font Upgrade */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
-body {
-  font-family: 'Inter', sans-serif;
-}
 
 /* ✨ Divider Lines Between Sections (use <hr class="section-divider"> in HTML) */
 hr.section-divider {
@@ -144,42 +139,55 @@ select:focus {
 </head>
 <body>
 
-  <h2>Select Your Language</h2>
-  <select id="languageDropdown">
-    <option value="" disabled selected>Select a language</option>
-    <optgroup label="✅ Offered Languages">
-      <option value="French">French 🇫🇷</option>
-      <option value="Italian">Italian 🇮🇹</option>
-      <option value="Spanish">Spanish 🇪🇸</option>
-      <option value="German">German 🇩🇪</option>
-      <option value="Arabic">Arabic 🇸🇦</option>
-      <option value="Portuguese">Portuguese 🇵🇹</option>
-      <option value="Latin">Latin 📖</option>
-    </optgroup>
-    <optgroup label="❌ Not Offered (Waiver Required)">
-      <option value="Hebrew">Hebrew 🇮🇱</option>
-      <option value="ASL">American Sign Language 🤟</option>
-      <option value="Chinese">Chinese 🇨🇳</option>
-      <option value="Greek">Greek 🇬🇷</option>
-      <option value="Japanese">Japanese 🇯🇵</option>
-      <option value="Russian">Russian 🇷🇺</option>
-      <option value="Other">🌍 Other (Provide Documentation for Waiver)</option>
-    </optgroup>
-  </select>
+   <!-- SCSU Header (Blue Top Bar - just for now, delete later) -->
+<div style="background-color:#01308f; color:white; padding:40px 20px;">
+  <a href="https://www.southernct.edu/academics/world-languages-and-literatures" 
+     target="_blank" 
+     style="text-decoration:none; display:flex; align-items:center;">
+      <img src="https://applywave.com/wp-content/uploads/2020/01/Southern_Connecticut.png" 
+           alt="SCSU Logo" 
+           style="height:158px; margin-right:15px;">
+      <span style="color:white; font-size:36px; font-weight:bold;">
+          Southern Connecticut State University
+      </span>
+  </a>
+</div>
 
-  <div id="placementMethodContainer" class="hidden">
-    <h3>Choose Your Placement Method</h3>
-    <select id="placementMethodDropdown">
-      <option value="" disabled selected>Select a method</option>
-      <option value="PLACE Test">📌 PLACE Test (Standard Placement)</option>
-      <option value="PLACE Waiver Exam">📜 PLACE Waiver Exam</option>
-      <option value="Advanced Placement (AP)">📜 Advanced Placement (AP)</option>
-      <option value="CLEP Exam">📖 CLEP Exam</option>
-      <option value="High School Placement">🎓 High School Placement</option>
-      <option value="Seal of Biliteracy">🏆 Seal of Biliteracy</option>
-      <option value="Study Abroad">✈️ Study Abroad</option>
-    </select>
-  </div>
+<h2>Select Your Language</h2>
+<select id="languageDropdown">
+  <option value="" disabled selected>Select a language</option>
+  <option value="Arabic">Arabic 🇸🇦</option>
+  <option value="ASL">American Sign Language 🤟</option>
+  <option value="Chinese">Chinese 🇨🇳</option>
+  <option value="French">French 🇫🇷</option>
+  <option value="German">German 🇩🇪</option>
+  <option value="Greek">Greek 🇬🇷</option>
+  <option value="Hebrew">Hebrew 🇮🇱</option>
+  <option value="Italian">Italian 🇮🇹</option>
+  <option value="Japanese">Japanese 🇯🇵</option>
+  <option value="Latin">Latin 📖</option>
+  <option value="Other">Other (Provide Documentation) 🌍 </option>
+  <option value="Portuguese">Portuguese 🇵🇹</option>
+  <option value="Russian">Russian 🇷🇺</option>
+  <option value="Spanish">Spanish 🇪🇸</option>
+</select>
+
+
+<div id="placementMethodContainer" class="hidden">
+  <h3>Choose Your Placement Method</h3>
+  <select id="placementMethodDropdown">
+    <option value="" disabled selected>Select a method</option>
+    <option value="PLACE Test">📌 PLACE Test (Standard Placement)</option>
+    <option value="STAMP Test">📜 STAMP Test</option>
+    <option value="Advanced Placement (AP)">📖 Advanced Placement (AP)</option>
+    <option value="CLEP Exam">📖 CLEP Exam</option>
+    <option value="High School Transcript">🎓 High School Transcript</option>
+    <option value="Seal of Biliteracy">🏆 Seal of Biliteracy</option>
+    <option value="Study Abroad">✈️ Study Abroad</option>
+    <option value="No Documentation">📁 No Official Documentation</option>
+  </select>
+</div>
+
 
   <div id="placementMethodText" class="container hidden">
     <h3>Placement Method Information</h3>
@@ -205,7 +213,7 @@ select:focus {
   </div>
 
   <div id="placeWaiverScoreContainer" class="container hidden">
-    <h3>PLACE Waiver Exam Score</h3>
+    <h3>STAMP Test Score</h3>
     <select id="placeWaiverScoreDropdown">
       <option value="" disabled selected>Select your score</option>
       <option value="3">Novice High (min score 3 on all skill areas)</option>
@@ -278,19 +286,45 @@ select:focus {
       };
       let selectedLangCode = "";
   
-      $('#languageDropdown').change(function () {
-        let selectedLang = $(this).val();
-        if (offeredLanguages[selectedLang]) {
+    $('#languageDropdown').change(function () {
+      let selectedLang = $(this).val();
+
+      // Reset dropdowns and containers
+      $('#placementMethodDropdown').val(""); // Reset placement method
+      $('#examScoreDropdown').empty();       // Clear previous exam score options
+      $('#scoreDropdown').val("");
+      $('#placeWaiverScoreDropdown').val("");
+      $('#highSchoolExperienceDropdown').val("");
+      $('#studyAbroadDropdown').val("");
+
+      // Hide all containers to reset the interface
+      $('#placementMethodText, #placementResult, #placeWaiverResult, #examPlacementResult, #highSchoolPlacementResult, #studyAbroadResult').addClass('hidden');
+      $('#scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer, #sealBiliteracyContainer, #waiverContainer').addClass('hidden');
+
+      // Show or hide based on language selection
+      if (offeredLanguages[selectedLang]) {
           selectedLangCode = offeredLanguages[selectedLang];
           $('#placementMethodContainer').removeClass('hidden');
           $('#scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer, #placementResult, #placeWaiverResult, #sealBiliteracyContainer, #waiverContainer, #placementMethodText').addClass('hidden');
-        } else {
-          selectedLangCode = "";
-          $('#placementMethodContainer, #scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer, #placementResult, #placeWaiverResult, #sealBiliteracyContainer').addClass('hidden');
-          $('#waiverContainer').removeClass('hidden');
-          $('#waiverText').html(`<h3>${selectedLang}</h3><p><strong>${selectedLang} is not offered as a course at this time.</strong></p><p>To receive a waiver, you must:</p><ul><li>✅ Submit official documentation to admissions@southernct.edu</li><li>✅ Take a proficiency test</li></ul><p>If approved, you may receive credit for WLL101 or WLL200.</p><button class="button">Waive Submission</button>`);
-        }
-      });
+      } else {
+        selectedLangCode = selectedLang.slice(0, 3).toUpperCase();
+        $('#placementMethodContainer').addClass('hidden');
+        $('#waiverContainer').removeClass('hidden');
+        $('#waiverText').html(`
+          <h3>${selectedLang}</h3>
+          <h4>${selectedLang}</h4>
+          <p><strong>${selectedLang} is not offered as a course at this time.</strong></p>
+          <p>To receive a waiver, you must:</p>
+          <ul>
+            <li>✅ Submit official documentation to </li>
+              <a href="mailto:admissions@southernct.edu">admissions@southernct.edu</a>
+            <li>✅ Take a proficiency test</li>
+          </ul>
+          <p>If approved, you may receive credit for ${selectedLangCode}101 or ${selectedLangCode}200.</p>
+        `);
+      }
+  });
+
   
       $('#placementMethodDropdown').change(function () {
         let selectedMethod = $(this).val();
@@ -303,11 +337,11 @@ select:focus {
             methodText = "You have selected the standard placement test.";
             $('#scoreContainer').removeClass('hidden');
             break;
-          case "PLACE Waiver Exam":
-            methodText = "Select your PLACE Waiver Exam score.";
+          case "STAMP Test":
+            methodText = "Select your STAMP Test score.";
             $('#placeWaiverScoreContainer').removeClass('hidden');
             break;
-          case "High School Placement":
+          case "High School Transcript":
             methodText = "Select your High School Experience level.";
             $('#highSchoolExperienceContainer').removeClass('hidden');
             break;
@@ -332,12 +366,20 @@ select:focus {
           case "Seal of Biliteracy":
             $('#sealBiliteracyContainer').removeClass('hidden');
             let text = selectedLangCode
-              ? `<p><strong>Eligible for course credit:</strong></p><p>If your Seal of Biliteracy is recognized, you may waive WLL101 or WLL200.</p><p>Submit official documentation to admissions@southernct.edu.</p><a href="mailto:admissions@southernct.edu"><button class="button">Submit Documentation</button></a>`
-              : `<p>This language is not offered at this time. Submit documentation for a waiver.</p>`;
+              ? `<p><strong>Eligible for course credit:</strong></p>
+                <p>If your Seal of Biliteracy is recognized, you may waive ${selectedLangCode} 101 or ${selectedLangCode} 200.</p>
+                <p>Submit official documentation to <a href="mailto:admissions@southernct.edu">admissions@southernct.edu</a>.</p>
+                `
+              :  '<p>This language is not offered at this time. Submit documentation for a waiver.</p>';
             $('#sealBiliteracyText').html(text);
             break;
           case "Study Abroad":
-            methodText = "Did you complete a study abroad program in this language?";
+            methodText = "Did you complete at least one year of high school or college coursework in this language?";
+            $('#studyAbroadDropdown').html(`
+              <option value="" disabled selected>Select an option</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            `);
             $('#studyAbroadContainer').removeClass('hidden');
             break;
         }
@@ -354,10 +396,11 @@ select:focus {
   
       $('#placeWaiverScoreDropdown').change(function () {
         const val = $(this).val();
-        const txt = val === "3" ? "WLL 101" : "WLL 101 & 200";
+        const txt = val === "3" ? `${selectedLangCode} 101` : `${selectedLangCode} 101 & 200`;
         $('#placeWaiverText').html(`You will receive credit for ${txt}.`);
         $('#placeWaiverResult').removeClass('hidden');
       });
+
   
       $('#examScoreDropdown').change(function () {
         const val = $(this).val();
@@ -390,11 +433,11 @@ select:focus {
       $('#studyAbroadDropdown').change(function () {
         const val = $(this).val();
         let msg = val === "yes"
-          ? "You may request a waiver by contacting admissions@southernct.edu."
-          : "You will not be able to waive the requirement. Visit SCSU Study Abroad for more info.";
-        $('#studyAbroadResultText').text(msg);
+          ? "You may request a waiver by contacting <a href='mailto:admissions@southernct.edu'>admissions@southernct.edu</a>."
+          : "Please explore other options to fulfill your language requirement.";
+        $('#studyAbroadResultText').html(msg);
         $('#studyAbroadResult').removeClass('hidden');
-      });
+    });
     });
   </script>
   
