@@ -2,7 +2,7 @@
 function get_db_connection() {
     $servername = "localhost";
     $username = "root";
-    $password = ""; // default for XAMPP
+    $password = "";
     $dbname = "questionnaire_db";
 
     $conn = new mysqli($servername, $username, $password, $dbname);

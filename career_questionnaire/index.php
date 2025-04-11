@@ -34,7 +34,7 @@
             height: auto;
             width: auto\9;
         }
-
+    
         .question, .start, .end { display: none; }
         .navigation { margin-top: 20px; display: flex; justify-content: space-between;}
         .hidden { display: none; }
@@ -68,10 +68,11 @@
             </div>
         </div>
 
+        
         <!-- End Screen -->
         <div id="end" class="hidden">
             <h2>Thank you for completing the questionnaire!</h2>
-            <p>Your job recommendation is:</p>
+            <p>These are the closest matches we could find:</p>
             
             <!-- Accordion for Job Recommendation -->
             <div class="accordion" id="jobRecommendationAccordion">
@@ -91,11 +92,26 @@
                 </div>
             </div>
 
+            <!-- View all jobs -->
+            <div id="show-jobs" class="mt-3">
+                <button class="btn btn-outline-primary" onclick="fetchAllJobs()">Don't like these suggestions? Click here.</button>
+            </div>
+        </div>
+    
+        <!-- Job navigation -->
+        <div id="job-pagination" class="mt-3 hidden justify-content-between">
+            <button id="prevJobsBtn" class="btn btn-secondary" onclick="prevJobs()">← Previous</button>
+            <button id="nextJobsBtn" class="btn btn-primary" onclick="nextJobs()">Next →</button>
+        </div>
+
+        <div id="restart" class="hidden">
             <!-- Restart Survey Button -->
             <div class="mt-3">
                 <button class="btn btn-secondary" onclick="restartSurvey()">Restart Survey</button>
             </div>
         </div>
+
+        
     </div>
 
     <script>
@@ -118,6 +134,7 @@
                 document.getElementById('start').style.display = 'none';
                 document.getElementById('questions').style.display = 'none';
                 document.getElementById('end').style.display = 'block';
+                document.getElementById('restart').classList.remove('hidden');
                 fetchJobEval();
             } else {
                 document.getElementById('start').style.display = 'none';
@@ -230,6 +247,80 @@
                 jobAccordion.appendChild(accordionItem);
             });
         }
+        
+        // This function handles showing all of the jobs, 8 at a time, if the user is unsatisfied with the results.
+        let jobs = []
+        let currentPage = 0
+        let currentPageMax = 1
+
+        async function fetchAllJobs() {
+            const response = await fetch('get_all_jobs.php');
+            jobs = await response.json(); // note: remove 'let' to use the global jobs array
+
+            const jobAccordion = document.getElementById('jobRecommendationAccordion');
+            jobAccordion.innerHTML = '';
+            currentPage = 0;
+            currentPageMax = Math.ceil(jobs.length / 8);
+
+            document.getElementById('job-pagination').classList.remove('hidden');
+            document.getElementById('job-pagination').classList.add('d-flex');
+            document.getElementById('show-jobs').classList.add('hidden');
+            renderJobs();
+        }
+
+        function renderJobs() {
+            const jobAccordion = document.getElementById('jobRecommendationAccordion');
+            jobAccordion.innerHTML = '';
+
+            const startIndex = currentPage * 8;
+            const endIndex = Math.min(startIndex + 8, jobs.length);
+
+            for (let i = startIndex; i < endIndex; i++) {
+                const job = jobs[i];
+                const jobId = job.job_id;
+                const jobTitle = job.job_title;
+                const jobDescription = job.alumni_stories?.trim() ? `<p>${job.job_description}</p>` : job.job_description;
+                const alumniStories = job.alumni_stories?.trim() ? `<h5>Alumni Stories:</h5><p>${job.alumni_stories}</p>` : '';
+
+                const accordionItem = document.createElement('div');
+                accordionItem.classList.add('accordion-item');
+                accordionItem.innerHTML = `
+                    <h2 class="accordion-header" id="headingAll${jobId}">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAll${jobId}" aria-expanded="false" aria-controls="collapseAll${jobId}">
+                            ${jobTitle}
+                        </button>
+                    </h2>
+                    <div id="collapseAll${jobId}" class="accordion-collapse collapse" aria-labelledby="headingAll${jobId}" data-bs-parent="#jobRecommendationAccordion">
+                        <div class="accordion-body">
+                            ${jobDescription}
+                            ${alumniStories}
+                        </div>
+                    </div>
+                `;
+                
+                jobAccordion.appendChild(accordionItem);
+            }
+
+            // Show or hide pagination buttons
+            document.getElementById('prevJobsBtn').disabled = currentPage === 0;
+            document.getElementById('nextJobsBtn').disabled = currentPage >= currentPageMax - 1;
+        }
+
+        function nextJobs() {
+            if (currentPage < currentPageMax - 1) {
+                currentPage++;
+                renderJobs();
+            }
+        }
+
+        function prevJobs() {
+            if (currentPage > 0) {
+                currentPage--;
+                renderJobs();
+            }
+        }
+
+
 
         fetchQuestions();
     </script>
