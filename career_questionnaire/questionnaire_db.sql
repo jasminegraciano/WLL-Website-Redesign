@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2025 at 05:11 AM
+-- Generation Time: Apr 11, 2025 at 03:37 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -108,7 +108,54 @@ INSERT INTO `jobs` (`job_id`, `job_title`, `job_description`, `alumni_stories`) 
 (9, 'Cultural Program Director', 'Direct and oversee cultural programs or projects.', ''),
 (10, 'International Aid Worker', 'Provide humanitarian aid and support in crisis situations.', ''),
 (11, 'Fashion or Luxury Goods Specialist', 'Work in the fashion industry, often with high-end goods.', ''),
-(12, 'Graduate Researcher or Professor', 'Conduct research and teach at the university level.', '');
+(12, 'Graduate Researcher or Professor', 'Conduct research and teach at the university level.', ''),
+(13, 'French Teacher', NULL, NULL),
+(14, 'Language Specialist', NULL, NULL),
+(15, 'Bilingual Customer Service Representative', NULL, NULL),
+(16, 'Study Abroad Coordinator', NULL, NULL),
+(17, 'Italian Language Specialist', NULL, NULL),
+(18, 'Italian Language Teacher (K-12)', NULL, NULL),
+(19, 'Italian Immersion Program Instructor', NULL, NULL),
+(20, 'Italian Language Assessment Specialist', NULL, NULL),
+(21, 'Curriculum Developer', NULL, NULL),
+(22, 'Italian Cultural Education Coordinator', NULL, NULL),
+(23, 'Italian Language Lab Coordinator', NULL, NULL),
+(24, 'Italian Language Tutor/Private Instructor', NULL, NULL),
+(25, 'Italian Textbook Author or Editor', NULL, NULL),
+(26, 'Italian Language Program Administrator', NULL, NULL),
+(27, 'Bilingual Education Specialist (Italian-English)', NULL, NULL),
+(28, 'Italian Heritage Language Program Coordinator', NULL, NULL),
+(29, 'Localization Specialist', NULL, NULL),
+(30, 'Marketing Specialist for Italian Brands', NULL, NULL),
+(31, 'Tourism and Hospitality Manager', NULL, NULL),
+(32, 'Food and Wine Industry Specialist', NULL, NULL),
+(33, 'Cultural Events Coordinator', NULL, NULL),
+(34, 'Cultural Exchange Program Coordinator', NULL, NULL),
+(35, 'Social Media Specialist for Italian markets', NULL, NULL),
+(36, 'International Student Services Coordinator', NULL, NULL),
+(37, 'Spanish Teacher', NULL, NULL),
+(38, 'Social Worker', NULL, NULL),
+(39, 'Healthcare Administrator', NULL, NULL),
+(40, 'Hospitality Manager', NULL, NULL),
+(41, 'Immigration Lawyer', NULL, NULL),
+(42, 'Writer', NULL, NULL),
+(43, 'Market Research Analyst', NULL, NULL),
+(44, 'ESL (English as a Second Language) Teacher', NULL, NULL),
+(45, 'EFL (English as a Foreign Language) Teacher', NULL, NULL),
+(46, 'K-12 ESL Teacher', NULL, NULL),
+(47, 'Adult ESL Educator', NULL, NULL),
+(48, 'Online English Teacher', NULL, NULL),
+(49, 'English Language Instructor', NULL, NULL),
+(50, 'Academic English Instructor', NULL, NULL),
+(51, 'Corporate Language Trainer', NULL, NULL),
+(52, 'Exam Preparation Coach (e.g., TOEFL, IELTS)', NULL, NULL),
+(53, 'Bilingual Healthcare Provider', 'Bilingual providers are especially valuable in regions with significant Spanish-speaking populations, as they improve patient communication and care quality without relying on interpreters.', NULL),
+(54, 'Community Health Worker', 'Educate Spanish-speaking communities on health topics, facilitate healthcare access, and support preventative care efforts.', NULL),
+(55, 'Healthcare Administration and Patient Advocacy', 'Support patients by helping them navigate the healthcare system, understand their rights, and access the services they need.', NULL),
+(56, 'Public Health Professional', 'Public health workers focus on disease prevention and health promotion, using their language skills to create and deliver culturally relevant health education programs.', NULL),
+(57, 'Medical Social Worker', 'Social workers with medical Spanish skills can assist Spanish-speaking patients and their families with counseling, discharge planning, and referrals to social services.', NULL),
+(58, 'Health Educator or Outreach Coordinator', 'Health educators with Medical Spanish skills can develop bilingual materials and run educational sessions for Spanish-speaking communities.', NULL),
+(59, 'Telehealth Specialist', 'Telehealth specialists with bilingual skills can provide direct care and support to Spanish-speaking patients in remote or underserved areas.', NULL);
 
 -- --------------------------------------------------------
 
@@ -234,7 +281,7 @@ ALTER TABLE `answers`
 -- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
-  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `job_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `questions`
