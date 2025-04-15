@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2025 at 03:57 PM
+-- Generation Time: Apr 15, 2025 at 03:31 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -165,7 +165,7 @@ INSERT INTO `jobs` (`job_id`, `job_title`, `job_description`, `alumni_stories`) 
 CREATE TABLE `jobweights` (
   `job_id` int(11) NOT NULL,
   `answer_id` int(11) NOT NULL,
-  `weight` double DEFAULT NULL
+  `weight` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
