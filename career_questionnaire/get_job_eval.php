@@ -15,12 +15,10 @@ if (!is_array($answer_ids)) {
 
 $conn = get_db_connection();
 
-// Sanitize and prepare placeholders
 $placeholders = implode(',', array_fill(0, count($answer_ids), '?'));
 $types = str_repeat('i', count($answer_ids));
 $params = $answer_ids;
 
-// Prepare question_id extraction
 $stmt = $conn->prepare("SELECT DISTINCT question_id FROM answers WHERE answer_id IN ($placeholders)");
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
@@ -53,7 +51,7 @@ while ($row = $result2->fetch_assoc()) {
 
 arsort($job_scores);
 
-$top_jobs = array_slice($job_scores, 0, 3, true);
+$top_jobs = array_slice($job_scores, 0, 5, true);
 
 if (empty($top_jobs)) {
     echo json_encode([]);
