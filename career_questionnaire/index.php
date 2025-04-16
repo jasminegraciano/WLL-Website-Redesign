@@ -130,11 +130,15 @@
                 document.getElementById('start').style.display = 'block';
                 document.getElementById('questions').style.display = 'none';
                 document.getElementById('end').style.display = 'none';
+                document.getElementById('restart').style.display = 'none';
+                document.getElementById('job-pagination').style.display = 'none';
+
             } else if (currentQuestion >= questions.length) {
                 document.getElementById('start').style.display = 'none';
                 document.getElementById('questions').style.display = 'none';
                 document.getElementById('end').style.display = 'block';
-                document.getElementById('restart').classList.remove('hidden');
+                document.getElementById('restart').style.display = 'block';
+                document.getElementById('show-jobs').style.display = 'block';
                 fetchJobEval();
             } else {
                 document.getElementById('start').style.display = 'none';
@@ -144,14 +148,16 @@
                 document.getElementById('question-text').textContent = `Q${currentQuestion + 1}/${questions.length}: ${questions[currentQuestion].question_text}`;
                 const optionsContainer = document.getElementById('options');
                 optionsContainer.innerHTML = "";
-
+                
+                let currentResponses = JSON.parse(sessionStorage.getItem('responses')) || {};
+                console.log(currentResponses);
                 questions[currentQuestion].options.forEach(option => {
                     let button = document.createElement('button');
                     button.textContent = option.answer_text;
                     button.classList.add('btn', 'btn-outline-primary', 'w-100');
                     button.onclick = () => selectOption(option.answer_id, button);
 
-                    if (selectedOptions[currentQuestion]?.includes(option.answer_id)) {
+                    if (currentResponses[currentQuestion]?.includes(option.answer_id)) {
                         button.classList.add('btn-selected');
                     }
 
@@ -181,19 +187,21 @@
         }
 
         function selectOption(option, button) {
-            const isMultipleChoice = questions[currentQuestion].multiple_choice === 1;
-
+            const isMultipleChoice = questions[currentQuestion].multiple_choice === "1";
             let currentResponses = JSON.parse(sessionStorage.getItem('responses')) || {};
             if (isMultipleChoice) {
+                console.log("Multiple choice option selected");
                 currentResponses[currentQuestion] = currentResponses[currentQuestion] || [];
                 if (currentResponses[currentQuestion].includes(option)) {
                     currentResponses[currentQuestion] = currentResponses[currentQuestion].filter(o => o !== option);
                     button.classList.remove('btn-selected');
                 } else {
+                    console.log("Adding answer from list")
                     currentResponses[currentQuestion].push(option);
                     button.classList.add('btn-selected');
                 }
             } else {
+                console.log("Not multiple choice option selected");
                 currentResponses[currentQuestion] = [option];
                 document.querySelectorAll('#options button').forEach(btn => btn.classList.remove('btn-selected'));
                 button.classList.add('btn-selected');
@@ -204,11 +212,6 @@
         async function fetchJobEval() {
             let responses = JSON.parse(sessionStorage.getItem('responses')) || {};
             let answerIds = Object.values(responses).flat();
-
-            if (answerIds.length === 0) {
-                document.getElementById('job-recommendation').textContent = 'No answers selected.';
-                return;
-            }
 
             const response = await fetch(`get_job_eval.php?${answerIds.map(id => `answer_id[]=${id}`).join('&')}`);
             const jobs = await response.json();
@@ -255,16 +258,15 @@
 
         async function fetchAllJobs() {
             const response = await fetch('get_all_jobs.php');
-            jobs = await response.json(); // note: remove 'let' to use the global jobs array
+            jobs = await response.json(); 
 
             const jobAccordion = document.getElementById('jobRecommendationAccordion');
+            document.getElementById('job-pagination').style.display = 'block';
+            document.getElementById('show-jobs').style.display = 'none';
             jobAccordion.innerHTML = '';
             currentPage = 0;
             currentPageMax = Math.ceil(jobs.length / 8);
 
-            document.getElementById('job-pagination').classList.remove('hidden');
-            document.getElementById('job-pagination').classList.add('d-flex');
-            document.getElementById('show-jobs').classList.add('hidden');
             renderJobs();
         }
 
