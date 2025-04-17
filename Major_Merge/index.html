@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Major Selector</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <div class="banner">
+        <a href="https://www.southernct.edu/academics/world-languages-and-literatures" target="_blank" class="banner-link">
+            <img src="https://applywave.com/wp-content/uploads/2020/01/Southern_Connecticut.png" alt="SCSU Logo" class="banner-image">
+            <span class="banner-text">Southern Connecticut State University</span>
+        </a>
+    </div>
+
+    <h1>SCSU Major Merger</h1>
+    <h2>Select a General Major followed by a Language Major to see if they can merge!</h2>
+    
+    <label for="generalMajor">Select General Major:</label>
+    <select id="generalMajor">
+        <option value="">--Select General Major--</option>
+    </select>
+    
+    <label for="languageMajor">Select Language Major:</label>
+    <select id="languageMajor">
+        <option value="">--Select Language Major--</option>
+    </select>
+
+    <!-- Confirm button using updateResult() to display the result calculted in javascript-->
+    <button id="confirmButton" onclick="updateResult()">Confirm Selection</button>
+
+    <h2>Result:</h2>
+    <p id="result"></p>
+    <p id="description"></p>
+
+    <script src="script.js"></script>
+</body>
+</html>
