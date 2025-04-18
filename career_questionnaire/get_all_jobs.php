@@ -1,4 +1,5 @@
 <?php
+header('Content-Type: application/json');
 require_once 'db.php';
 
 $conn = get_db_connection();
