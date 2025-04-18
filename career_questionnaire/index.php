@@ -150,7 +150,6 @@
                 optionsContainer.innerHTML = "";
                 
                 let currentResponses = JSON.parse(sessionStorage.getItem('responses')) || {};
-                console.log(currentResponses);
                 questions[currentQuestion].options.forEach(option => {
                     let button = document.createElement('button');
                     button.textContent = option.answer_text;
@@ -190,18 +189,15 @@
             const isMultipleChoice = questions[currentQuestion].multiple_choice === "1";
             let currentResponses = JSON.parse(sessionStorage.getItem('responses')) || {};
             if (isMultipleChoice) {
-                console.log("Multiple choice option selected");
                 currentResponses[currentQuestion] = currentResponses[currentQuestion] || [];
                 if (currentResponses[currentQuestion].includes(option)) {
                     currentResponses[currentQuestion] = currentResponses[currentQuestion].filter(o => o !== option);
                     button.classList.remove('btn-selected');
                 } else {
-                    console.log("Adding answer from list")
                     currentResponses[currentQuestion].push(option);
                     button.classList.add('btn-selected');
                 }
             } else {
-                console.log("Not multiple choice option selected");
                 currentResponses[currentQuestion] = [option];
                 document.querySelectorAll('#options button').forEach(btn => btn.classList.remove('btn-selected'));
                 button.classList.add('btn-selected');
