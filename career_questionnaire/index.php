@@ -46,74 +46,80 @@
     </style>
 </head>
 <body class="d-flex justify-content-center align-items-center" style="margin-top: 20px;">
-    <a href="https://www.southernct.edu/academics/world-languages-and-literatures">
-        <img src="static/scsu-logo.png" alt="SCSU Logo" class="logo">
-    </a>
-
-    <div class="container text-center">
-        <!-- Start Screen -->
-        <div id="start">
-            <h1>Welcome to the SCSU World Languages Questionnaire</h1>
-            <p>Answer the following questions and we'll evaluate your answers into possible jobs focused on world language studies.</p>
-            <button class="btn btn-primary" onclick="nextQuestion()">Start</button>
-        </div>
-
-        <!-- Questions Section -->
-        <div id="questions" class="hidden">
-            <h2 id="question-text"></h2>
-            <div id="options" class="d-grid gap-2"></div>
-            <div class="mt-3">
-                <button id="prev" class="btn btn-secondary hidden" onclick="prevQuestion()">← Previous</button>
-                <button id="next" class="btn btn-primary" onclick="nextQuestion()">Next →</button>
+    <header>
+        <a href="https://www.southernct.edu/academics/world-languages-and-literatures">
+            <img src="static/scsu-logo.png" alt="SCSU Logo" class="logo">
+        </a>
+    </header>
+    <main>
+        <div class="container text-center">
+            <!-- Start Screen -->
+            <div id="start">
+                <h1>Welcome to the SCSU World Languages Questionnaire</h1>
+                <p>Answer the following questions and we'll evaluate your answers into possible jobs focused on world language studies.</p>
+                <button class="btn btn-primary" onclick="nextQuestion()">Start</button>
             </div>
-        </div>
 
-        
-        <!-- End Screen -->
-        <div id="end" class="hidden">
-            <h2>Thank you for completing the questionnaire!</h2>
-            <p>These are the closest matches we could find:</p>
+            <!-- Questions Section -->
+            <div id="questions" class="hidden">
+                <h2 id="question-text"></h2>
+                <div id="options" class="d-grid gap-2"></div>
+                <nav>
+                    <div class="mt-3">
+                        <button id="prev" class="btn btn-secondary hidden" onclick="prevQuestion()">← Previous</button>
+                        <button id="next" class="btn btn-primary" onclick="nextQuestion()">Next →</button>
+                    </div>
+                </nav>
+            </div>
+
             
-            <!-- Accordion for Job Recommendation -->
-            <div class="accordion" id="jobRecommendationAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingJob">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJob" aria-expanded="true" aria-controls="collapseJob">
-                            Job Title (Click to view description)
-                        </button>
-                    </h2>
-                    <div id="collapseJob" class="accordion-collapse collapse" aria-labelledby="headingJob" data-bs-parent="#jobRecommendationAccordion">
-                        <div class="accordion-body">
-                            <div id="job-recommendation">
-                                <!-- Job description will be inserted here -->
+            <!-- End Screen -->
+            <div id="end" class="hidden">
+                <h2>Thank you for completing the questionnaire!</h2>
+                <p>These are the closest matches we could find:</p>
+                
+                <!-- Accordion for Job Recommendation -->
+                <div class="accordion" id="jobRecommendationAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingJob">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseJob" aria-expanded="true" aria-controls="collapseJob">
+                                Job Title (Click to view description)
+                            </button>
+                        </h2>
+                        <div id="collapseJob" class="accordion-collapse collapse" aria-labelledby="headingJob" data-bs-parent="#jobRecommendationAccordion">
+                            <div class="accordion-body">
+                                <div id="job-recommendation">
+                                    <!-- Job description will be inserted here -->
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- View all jobs -->
-            <div id="show-jobs" class="mt-3">
-                <button class="btn btn-outline-primary" onclick="fetchAllJobs()">Don't like these suggestions? Click here.</button>
+                <!-- View all jobs -->
+                <div id="show-jobs" class="mt-3">
+                    <button class="btn btn-outline-primary" onclick="fetchAllJobs()">Don't like these suggestions? Click here.</button>
+                </div>
             </div>
-        </div>
-    
-        <!-- Job navigation -->
-        <div id="job-pagination" class="mt-3 hidden justify-content-between">
-            <button id="prevJobsBtn" class="btn btn-secondary" onclick="prevJobs()">← Previous</button>
-            <button id="nextJobsBtn" class="btn btn-primary" onclick="nextJobs()">Next →</button>
-        </div>
-
-        <div id="restart" class="hidden">
-            <!-- Restart Survey Button -->
-            <div class="mt-3">
-                <button class="btn btn-secondary" onclick="restartSurvey()">Restart Survey</button>
-            </div>
-        </div>
-
         
-    </div>
+            <!-- Job navigation -->
+            <div id="job-pagination" class="mt-3 hidden justify-content-between">
+                <nav>
+                    <button id="prevJobsBtn" class="btn btn-secondary" onclick="prevJobs()">← Previous</button>
+                    <button id="nextJobsBtn" class="btn btn-primary" onclick="nextJobs()">Next →</button>
+                </nav>
+            </div>
 
+            <div id="restart" class="hidden">
+                <!-- Restart Survey Button -->
+                <div class="mt-3">
+                    <button class="btn btn-secondary" onclick="restartSurvey()">Restart Survey</button>
+                </div>
+            </div>
+
+            
+        </div>
+    </main>
     <script>
         let currentQuestion = -1;
         let selectedOptions = {};
