@@ -157,7 +157,7 @@ select:focus {
 <select id="languageDropdown">
   <option value="" disabled selected>Select Language</option>
   <option value="Arabic">Arabic 🇸🇦</option>
-  <option value="ASL">American Sign Language 🤟</option>
+  <option value="American Sign Language">American Sign Language 🤟</option>
   <option value="Chinese">Chinese 🇨🇳</option>
   <option value="French">French 🇫🇷</option>
   <option value="German">German 🇩🇪</option>
@@ -296,6 +296,21 @@ select:focus {
   
     $('#languageDropdown').change(function () {
       let selectedLang = $(this).val();
+      // Handle "Other Languages" separately first
+      if (selectedLang === "Other") {
+        $('#placementMethodContainer, #scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer').addClass('hidden');
+        $('#placementMethodText, #placementResult, #placeWaiverResult, #examPlacementResult, #highSchoolPlacementResult, #studyAbroadResult, #sealBiliteracyContainer, #waiverContainer, #noDocumentationInfo').addClass('hidden');
+
+        $('#otherLanguageText').html(`
+          <strong>Contact the WLL department for guidance:</strong><br>
+          <a href="mailto:wllinfo@southernct.edu">wllinfo@southernct.edu</a>
+        `);
+        $('#otherLanguageInfo').removeClass('hidden');
+        $('#experienceHeader').addClass('hidden'); 
+
+        return; // Exit before any other logic runs
+      }
+
     $('#experienceHeader')
       .text(`Describe Your Experience with the Language ${selectedLang}`)
       .removeClass('hidden');
@@ -315,14 +330,24 @@ select:focus {
       $('#noDocumentationInfo').addClass('hidden');
 
       if (offeredLanguages[selectedLang]) {
-        selectedLangCode = offeredLanguages[selectedLang];
-
-        if (offeredLanguages[selectedLang]) {
+        if (selectedLang === "American Sign Language") {
           selectedLangCode = offeredLanguages[selectedLang];
 
-          // Default placement methods for other languages
+          // Skip the placement method dropdown
+          $('#placementMethodContainer').addClass('hidden');
+
+          // Directly show high school transcript experience section
+          $('#highSchoolExperienceContainer').removeClass('hidden');
+          $('#otherLanguageInfo').addClass('hidden');
+
+          return; // Exit so the rest doesn't run
+
+     } else {
+          selectedLangCode = offeredLanguages[selectedLang];
+
+          // Default placement methods for other offered languages
           $('#placementMethodDropdown').html(`
-            <option disabled selected value="">Select a method</option>
+            <option disabled selected value="">Select Your Experience</option>
             <option value="PLACE Test">📝 PLACE Test (Standard Placement)</option>
             <option value="STAMP Test">🧪 STAMP Test</option>
             <option value="Advanced Placement (AP)">📘 Advanced Placement (AP)</option>
@@ -332,20 +357,11 @@ select:focus {
             <option value="Study Abroad">🌍 Study Abroad</option>
             <option value="No Documentation">📂 No Official Documentation</option>
           `);
-          $('#placementMethodContainer').removeClass('hidden');
-          $('#highSchoolExperienceContainer').removeClass('hidden');
-          $('#otherLanguageInfo').addClass('hidden');
+        } 
+      
+     
 
-        }
-        else{
-          selectedLangCode = selectedLang.slice(0,3).toUpperCase();
-          $('#placementMethodContainer').removeClass('hidden');
-          $('#highSchoolExperienceContainer').removeClass('hidden');
-          $('#otherLanguageInfo').addClass('hidden');
-        }
-        
-
-        $('#scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer').addClass('hidden');
+        $('#placementMethodContainer').removeClass('hidden');
         $('#otherLanguageInfo').addClass('hidden');
       }
 
@@ -460,7 +476,7 @@ select:focus {
           }
         } else {
           if (val === "3" || val === "4" || val === "5") {
-            message = "You have your university language requirement waived.";
+            message = "You have your university language requirement waived. No credits awarded";
           } else {
             const level = { "0-1": "100", "2": "101" }[val];
             message = `You should enroll in ${selectedLangCode} ${level}.`;
@@ -531,7 +547,7 @@ select:focus {
         } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
           message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 100 & 101)`;
         } else {
-          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 100 & 101)`;
+          message = `You have your university language requirement waived for 6 credits. (${selectedLangCode} 100 & 101)`;
         }
       } else if (val === "CLEP-66") {
         if (selectedLangCode === "SPA") {
@@ -539,7 +555,7 @@ select:focus {
         } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
           message = `You have your university language requirement waived with 9 credits. (${selectedLangCode} 100, 101 & 200)`;
         } else {
-          message = `You have your university language requirement waived with 9 credits. (${selectedLangCode} 100, 101 & 200)`;
+          message = `You have your university language requirement waived for 9 credits. (${selectedLangCode} 100, 101 & 200)`;
         }
       }
 
