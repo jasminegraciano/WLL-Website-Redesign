@@ -6,6 +6,7 @@
   <title>Language Placement</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
+    /* 1-139: Defines layout, styling, dropdown UI, hover effects */
     body {
       font-family: "Open Sans", sans-serif;
       text-align: center;
@@ -133,12 +134,10 @@ select:focus {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   transition: all 0.1s ease-in-out;
 }
-
-
 </style>
 </head>
 <body>
-
+  
    <!-- SCSU Header (Blue Top Bar - just for now, delete later) -->
 <div style="background-color:#01308f; color:white; padding:40px 20px;">
   <a href="https://www.southernct.edu/academics/world-languages-and-literatures" 
@@ -153,30 +152,27 @@ select:focus {
   </a>
 </div>
 
-<h2>Select Your Language</h2>
+
+<h2>What Language Have You Had Experience With?</h2>
 <select id="languageDropdown">
-  <option value="" disabled selected>Select a language</option>
+  <option value="" disabled selected>Select Language</option>
   <option value="Arabic">Arabic 🇸🇦</option>
   <option value="ASL">American Sign Language 🤟</option>
   <option value="Chinese">Chinese 🇨🇳</option>
   <option value="French">French 🇫🇷</option>
   <option value="German">German 🇩🇪</option>
   <option value="Greek">Greek 🇬🇷</option>
-  <option value="Hebrew">Hebrew 🇮🇱</option>
   <option value="Italian">Italian 🇮🇹</option>
-  <option value="Japanese">Japanese 🇯🇵</option>
   <option value="Latin">Latin 📖</option>
-  <option value="Other">Other (Provide Documentation) 🌍 </option>
   <option value="Portuguese">Portuguese 🇵🇹</option>
-  <option value="Russian">Russian 🇷🇺</option>
   <option value="Spanish">Spanish 🇪🇸</option>
+  <option value="Other">Other Languages 🌍 </option>
 </select>
 
-
+<h3 id="experienceHeader" class="hidden"></h3>
 <div id="placementMethodContainer" class="hidden">
-  <h3>Choose Your Placement Method</h3>
   <select id="placementMethodDropdown">
-    <option value="" disabled selected>Select a method</option>
+    <option value="" disabled selected>Select Your Experience</option>
     <option value="PLACE Test">📌 PLACE Test (Standard Placement)</option>
     <option value="STAMP Test">📜 STAMP Test</option>
     <option value="Advanced Placement (AP)">📖 Advanced Placement (AP)</option>
@@ -188,11 +184,16 @@ select:focus {
   </select>
 </div>
 
-
   <div id="placementMethodText" class="container hidden">
     <h3>Placement Method Information</h3>
     <p id="placementMethodResult"></p>
   </div>
+
+  <div id="noDocumentationInfo" class="container hidden">
+    <h3>No Official Documentation</h3>
+    <p id="noDocumentationText"></p>
+  </div>
+  
 
   <div id="scoreContainer" class="container hidden">
     <h3>Select Your Score</h3>
@@ -208,7 +209,7 @@ select:focus {
 
 
   <div id="placementResult" class="container hidden">
-    <h3>Placement Result</h3>
+    <h3>Result and Recommendation</h3>
     <p id="resultText"></p>
   </div>
 
@@ -222,7 +223,7 @@ select:focus {
   </div>
 
   <div id="placeWaiverResult" class="container hidden">
-    <h3>Placement Waiver Result</h3>
+    <h3>Result and Recommendation</h3>
     <p id="placeWaiverText"></p>
   </div>
 
@@ -231,7 +232,7 @@ select:focus {
     <select id="examScoreDropdown"></select>
   
     <div id="examPlacementResult" class="container hidden" style="margin-top: 20px;">
-        <h3>Placement Result</h3>
+        <h3>Result and Recommendation</h3>
         <p id="examResultText"></p>
     </div>
       
@@ -250,12 +251,12 @@ select:focus {
   </div>
 
   <div id="highSchoolPlacementResult" class="container hidden">
-    <h3>Placement Result</h3>
+    <h3>Result and Recommendation</h3>
     <p id="highSchoolResultText"></p>
   </div>
 
   <div id="studyAbroadContainer" class="container hidden">
-    <h3>Did you complete a study abroad program in this language?</h3>
+    <h3>Did You Attend at Least One Year at a Non-English Speaking High School or College Overseas?</h3>
     <select id="studyAbroadDropdown">
       <option value="" disabled selected>Select an option</option>
       <option value="yes">Yes, I studied abroad</option>
@@ -264,7 +265,7 @@ select:focus {
   </div>
 
   <div id="studyAbroadResult" class="container hidden">
-    <h3>Study Abroad Results</h3>
+    <h3>Result and Recommendation</h3>
     <p id="studyAbroadResultText"></p>
   </div>
 
@@ -278,16 +279,27 @@ select:focus {
     <p id="waiverText"></p>
   </div>
 
+  <div id="otherLanguageInfo" class="container hidden">
+    <p id="otherLanguageText"></p>
+  </div>
+  
+
 <script>
+    /* offered languages */
     $(document).ready(function () {
       let offeredLanguages = {
         "French": "FRE", "Italian": "ITA", "Spanish": "SPA", "German": "GER",
-        "Arabic": "ARB", "Portuguese": "POR", "Latin": "LAT"
+        "Arabic": "ARB", "Portuguese": "POR", "Latin": "LAT", "Chinese" : "CHI", "Greek" : "WLL", "American Sign Language" : "WLL"
       };
-      let selectedLangCode = "";
+      let selectedLangCode = ""; 
+
   
     $('#languageDropdown').change(function () {
       let selectedLang = $(this).val();
+    $('#experienceHeader')
+      .text(`Describe Your Experience with the Language ${selectedLang}`)
+      .removeClass('hidden');
+
 
       // Reset dropdowns and containers
       $('#placementMethodDropdown').val(""); // Reset placement method
@@ -300,36 +312,51 @@ select:focus {
       // Hide all containers to reset the interface
       $('#placementMethodText, #placementResult, #placeWaiverResult, #examPlacementResult, #highSchoolPlacementResult, #studyAbroadResult').addClass('hidden');
       $('#scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer, #sealBiliteracyContainer, #waiverContainer').addClass('hidden');
+      $('#noDocumentationInfo').addClass('hidden');
 
-      // Show or hide based on language selection
       if (offeredLanguages[selectedLang]) {
+        selectedLangCode = offeredLanguages[selectedLang];
+
+        if (offeredLanguages[selectedLang]) {
           selectedLangCode = offeredLanguages[selectedLang];
+
+          // Default placement methods for other languages
+          $('#placementMethodDropdown').html(`
+            <option disabled selected value="">Select a method</option>
+            <option value="PLACE Test">📝 PLACE Test (Standard Placement)</option>
+            <option value="STAMP Test">🧪 STAMP Test</option>
+            <option value="Advanced Placement (AP)">📘 Advanced Placement (AP)</option>
+            <option value="CLEP Exam">📗 CLEP Exam</option>
+            <option value="High School Transcript">🎓 High School Transcript</option>
+            <option value="Seal of Biliteracy">🏆 Seal of Biliteracy</option>
+            <option value="Study Abroad">🌍 Study Abroad</option>
+            <option value="No Documentation">📂 No Official Documentation</option>
+          `);
           $('#placementMethodContainer').removeClass('hidden');
-          $('#scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer, #placementResult, #placeWaiverResult, #sealBiliteracyContainer, #waiverContainer, #placementMethodText').addClass('hidden');
-      } else {
-        selectedLangCode = selectedLang.slice(0, 3).toUpperCase();
-        $('#placementMethodContainer').addClass('hidden');
-        $('#waiverContainer').removeClass('hidden');
-        $('#waiverText').html(`
-          <h3>${selectedLang}</h3>
-          <h4>${selectedLang}</h4>
-          <p><strong>${selectedLang} is not offered as a course at this time.</strong></p>
-          <p>To receive a waiver, you must:</p>
-          <ul>
-            <li>✅ Submit official documentation to </li>
-              <a href="mailto:admissions@southernct.edu">admissions@southernct.edu</a>
-            <li>✅ Take a proficiency test</li>
-          </ul>
-          <p>If approved, you may receive credit for ${selectedLangCode}101 or ${selectedLangCode}200.</p>
-        `);
+          $('#highSchoolExperienceContainer').removeClass('hidden');
+          $('#otherLanguageInfo').addClass('hidden');
+
+        }
+        else{
+          selectedLangCode = selectedLang.slice(0,3).toUpperCase();
+          $('#placementMethodContainer').removeClass('hidden');
+          $('#highSchoolExperienceContainer').removeClass('hidden');
+          $('#otherLanguageInfo').addClass('hidden');
+        }
+        
+
+        $('#scoreContainer, #examScoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer').addClass('hidden');
+        $('#otherLanguageInfo').addClass('hidden');
       }
+
+
   });
 
-  
+     
       $('#placementMethodDropdown').change(function () {
         let selectedMethod = $(this).val();
         let methodText = "";
-        $('#examScoreContainer, #scoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer, #placementResult, #placeWaiverResult, #sealBiliteracyContainer, #waiverContainer, #highSchoolPlacementResult, #studyAbroadResult, #examPlacementResult').addClass('hidden');
+        $('#examScoreContainer, #scoreContainer, #placeWaiverScoreContainer, #highSchoolExperienceContainer, #studyAbroadContainer, #placementResult, #placeWaiverResult, #sealBiliteracyContainer, #waiverContainer, #highSchoolPlacementResult, #studyAbroadResult, #examPlacementResult, #noDocumentationInfo').addClass('hidden');
         $('#examScoreDropdown').empty();
   
         switch (selectedMethod) {
@@ -366,15 +393,15 @@ select:focus {
           case "Seal of Biliteracy":
             $('#sealBiliteracyContainer').removeClass('hidden');
             let text = selectedLangCode
-              ? `<p><strong>Eligible for course credit:</strong></p>
-                <p>If your Seal of Biliteracy is recognized, you may waive ${selectedLangCode} 101 or ${selectedLangCode} 200.</p>
-                <p>Submit official documentation to <a href="mailto:admissions@southernct.edu">admissions@southernct.edu</a>.</p>
+              ? `
+                <p>Your language requirement is waived with 6 credits </p>
+                  <p>(${selectedLangCode} 101 & ${selectedLangCode} 200) </p>
                 `
-              :  '<p>This language is not offered at this time. Submit documentation for a waiver.</p>';
+              :  '<p></p>';
             $('#sealBiliteracyText').html(text);
             break;
           case "Study Abroad":
-            methodText = "Did you complete at least one year of high school or college coursework in this language?";
+            methodText = "Please provide the following infomration";
             $('#studyAbroadDropdown').html(`
               <option value="" disabled selected>Select an option</option>
               <option value="yes">Yes</option>
@@ -382,58 +409,206 @@ select:focus {
             `);
             $('#studyAbroadContainer').removeClass('hidden');
             break;
+          case "No Documentation":
+          $('#noDocumentationText').html(`
+            If you don’t have official documentation, you must take a waiver test.<br><br>
+            <strong>Acceptable options include:</strong>
+            <ul>
+              <li>PLACE Test</li>
+              <li>ACTFL Test</li>
+              <li>CLEP Exam</li>
+            </ul>
+          `);
+          $('#noDocumentationInfo').removeClass('hidden');
+          break;
         }
-        $('#placementMethodResult').text(methodText);
-        $('#placementMethodText').toggleClass('hidden', !methodText);
+      $('#placementMethodResult').text(methodText);
+      $('#placementMethodText').toggleClass('hidden', !methodText);
+
+  $('#resultText').html(message);
+  $('#placementResult').removeClass('hidden');
+
       });
-  
+      
       $('#scoreDropdown').change(function () {
         const val = $(this).val();
-        const level = { "0-1": "100", "2": "101", "3": "200", "4": "210", "5": "300" }[val];
-        $('#resultText').html(`You should enroll in ${selectedLangCode} ${level}.`);
-        $('#placementResult').removeClass('hidden');
-      });
-  
-      $('#placeWaiverScoreDropdown').change(function () {
-        const val = $(this).val();
-        const txt = val === "3" ? `${selectedLangCode} 101` : `${selectedLangCode} 101 & 200`;
-        $('#placeWaiverText').html(`You will receive credit for ${txt}.`);
-        $('#placeWaiverResult').removeClass('hidden');
-      });
-
-  
-      $('#examScoreDropdown').change(function () {
-        const val = $(this).val();
-        let resultText = "";
+        let message = "";
 
         if (!selectedLangCode || !val) return;
 
-        if (val.includes("AP")) {
-            const level = val.includes("4-5") ? "101 & 200" : "101";
-            resultText = `AP Exam Result: You will receive credit for ${selectedLangCode} ${level}.<br>You may waive ${selectedLangCode} ${level}.<br>Please submit your scores to <a href="mailto:admissions@southernct.edu">admissions@southernct.edu</a>.`;
-        } else if (val.includes("CLEP")) {
-          const level = val.includes("66") ? "101 & 200" : "100 & 101";
-          resultText = `CLEP Exam Result: You will receive credit for ${selectedLangCode} ${level}.<br>You may waive ${selectedLangCode} ${level}.<br>Please submit your scores to <a href="mailto:admissions@southernct.edu">admissions@southernct.edu</a>.`;
+        if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
+          if (val === "3") {
+            message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 200.`;
+          } else if (val === "4") {
+            message = `You have your university language requirement waived. You should enroll in a ${selectedLangCode} 200-level course.`;
+          } else if (val === "5") {
+            message = `You have your university language requirement waived. Contact the department for placement: <a href='mailto:wllinfo@southernct.edu'>wllinfo@southernct.edu</a>`;
+          } else {
+            const level = { "0-1": "100", "2": "101" }[val];
+            message = `You should enroll in ${selectedLangCode} ${level}.`;
+          }
+        } else if (selectedLangCode === "SPA") {
+          if (val === "3") {
+            message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 100). You should enroll in ${selectedLangCode} 200.`;
+          } else if (val === "4") {
+            message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 210.`;
+          } else if (val === "5") {
+            message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). Contact the WLL department for placement: <a href='mailto:wllinfo@southernct.edu'>wllinfo@southernct.edu</a>`;
+          } else {
+            const level = { "0-1": "100", "2": "101" }[val];
+            message = `You should enroll in ${selectedLangCode} ${level}.`;
+          }
+        } else {
+          if (val === "3" || val === "4" || val === "5") {
+            message = "You have your university language requirement waived.";
+          } else {
+            const level = { "0-1": "100", "2": "101" }[val];
+            message = `You should enroll in ${selectedLangCode} ${level}.`;
+          }
         }
 
-        if (resultText) {
-            $('#examResultText').html(resultText);
-            $('#examPlacementResult').removeClass('hidden');
-        }
-    });
+        $('#resultText').html(message);
+        $('#placementResult').removeClass('hidden');
+      });
 
   
-      $('#highSchoolExperienceDropdown').change(function () {
-        const val = $(this).val();
-        let txt = val === "1" ? "100" : val === "2" ? "101" : "200-level";
-        $('#highSchoolResultText').html(`You should enroll in ${selectedLangCode} ${txt}.`);
+
+    $('#placeWaiverScoreDropdown').change(function () {
+      const val = $(this).val();
+      let message = "";
+
+      if (!selectedLangCode || !val) return;
+
+      if ((selectedLangCode === "FRE" || selectedLangCode === "ITA") && val === "3") {
+        message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+      } else if ((selectedLangCode === "FRE" || selectedLangCode === "ITA") && val === "4") {
+        message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+      } else if (selectedLangCode === "SPA" && val === "3") {
+        message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 200.`;
+      } else if (selectedLangCode === "SPA" && val === "4") {
+        message = `You have your university language requirement waived with 6 credits (${selectedLangCode} 101 & 200). You should enroll in ${selectedLangCode} 210.`;
+      } else if (val === "3") {
+        message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+      } else if (val === "4") {
+        message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+      }
+
+      $('#placeWaiverText').html(message);
+      $('#placeWaiverResult').removeClass('hidden');
+    });
+
+
+  
+    $('#examScoreDropdown').change(function () {
+      const val = $(this).val();
+      let message = "";
+
+      if (!selectedLangCode || !val) return;
+
+      // 🔹 AP Logic
+      if (val === "AP-3") {
+        if (selectedLangCode === "SPA") {
+          message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 200.`;
+        } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
+          message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+        } else {
+          message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+        }
+      } else if (val === "AP-4-5") {
+        if (selectedLangCode === "SPA") {
+          message = `You have your university language requirement waived with 6 credits (${selectedLangCode} 101 & 200). You should enroll in ${selectedLangCode} 210.`;
+        } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
+          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+        } else {
+          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+        }
+      }
+
+      // 🔹 CLEP Logic
+      else if (val === "CLEP-50-65") {
+        if (selectedLangCode === "SPA") {
+          message = `You have your university language requirement waived with 6 credits (${selectedLangCode} 100 & 101). You should enroll in ${selectedLangCode} 200.`;
+        } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
+          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 100 & 101)`;
+        } else {
+          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 100 & 101)`;
+        }
+      } else if (val === "CLEP-66") {
+        if (selectedLangCode === "SPA") {
+          message = `You have your university language requirement waived with 9 credits (${selectedLangCode} 100, 101 & 200). You should enroll in ${selectedLangCode} 210.`;
+        } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
+          message = `You have your university language requirement waived with 9 credits. (${selectedLangCode} 100, 101 & 200)`;
+        } else {
+          message = `You have your university language requirement waived with 9 credits. (${selectedLangCode} 100, 101 & 200)`;
+        }
+      }
+
+      $('#examResultText').html(message);
+      $('#examPlacementResult').removeClass('hidden');
+    });
+
+
+    
+    $('#highSchoolExperienceDropdown').change(function () {
+      const val = $(this).val();
+      let message = "";
+
+      if (!selectedLangCode || !val) return;
+      // ASL-specific logic ONLY
+      if (selectedLangCode === "ASL") {
+        if (val === "1") {
+          message = `You should enroll in ${selectedLangCode} 100.`;
+        } else if (val === "2") {
+          message = `You should enroll in ${selectedLangCode} 101.`;
+        } else if (val === "3" || val === "4") {
+          message = "You have your university language requirement waived.";
+        }
+
+        $('#highSchoolResultText').html(message);
         $('#highSchoolPlacementResult').removeClass('hidden');
-      });
+        return; // Stop here so other languages aren't affected
+      }
+
+      if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
+        if (val === "1") {
+          message = `You should enroll in ${selectedLangCode} 100.`;
+        } else if (val === "2") {
+          message = `You should enroll in ${selectedLangCode} 101.`;
+        } else if (val === "3") {
+          message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 200.`;
+        } else if (val === "4") {
+          message = `You have your university language requirement waived. You should enroll in a ${selectedLangCode} 200-level course.`;
+        }
+      } else if (selectedLangCode === "SPA") {
+        if (val === "1") {
+          message = `You should enroll in ${selectedLangCode} 100.`;
+        } else if (val === "2") {
+          message = `You should enroll in ${selectedLangCode} 101.`;
+        } else if (val === "3") {
+          message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 200.`;
+        } else if (val === "4") {
+          message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 210.`;
+        }
+      } else {
+        if (val === "1") {
+          message = `You should enroll in ${selectedLangCode} 100.`;
+        } else if (val === "2") {
+          message = `You should enroll in ${selectedLangCode} 101.`;
+        } else if (val === "3" || val === "4") {
+          message = "You’ve fulfilled your university language requirement. No credits are awarded.";
+        }
+      }
+
+      $('#highSchoolResultText').html(message);
+      $('#highSchoolPlacementResult').removeClass('hidden');
+    });
+
+
   
       $('#studyAbroadDropdown').change(function () {
         const val = $(this).val();
         let msg = val === "yes"
-          ? "You may request a waiver by contacting <a href='mailto:admissions@southernct.edu'>admissions@southernct.edu</a>."
+          ? "You may request a language requirement waiver by contacting <a href='mailto:wllinfo@southernct.edu'>wllinfo@southernct.edu</a>."
           : "Please explore other options to fulfill your language requirement.";
         $('#studyAbroadResultText').html(msg);
         $('#studyAbroadResult').removeClass('hidden');
