@@ -302,7 +302,7 @@ select:focus {
         $('#placementMethodText, #placementResult, #placeWaiverResult, #examPlacementResult, #highSchoolPlacementResult, #studyAbroadResult, #sealBiliteracyContainer, #waiverContainer, #noDocumentationInfo').addClass('hidden');
 
         $('#otherLanguageText').html(`
-          <strong>Contact the WLL department for guidance:</strong><br>
+          Contact the WLL department for guidance:<br>
           <a href="mailto:wllinfo@southernct.edu">wllinfo@southernct.edu</a>
         `);
         $('#otherLanguageInfo').removeClass('hidden');
@@ -454,29 +454,29 @@ select:focus {
 
         if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
           if (val === "3") {
-            message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 200.`;
+            message = `You have fulfilled your university language requirement. You should enroll in ${selectedLangCode} 200.`;
           } else if (val === "4") {
-            message = `You have your university language requirement waived. You should enroll in a ${selectedLangCode} 200-level course.`;
+            message = `You have fulfilled your university language requirement. You should enroll in a ${selectedLangCode} 200-level course.`;
           } else if (val === "5") {
-            message = `You have your university language requirement waived. Contact the department for placement: <a href='mailto:wllinfo@southernct.edu'>wllinfo@southernct.edu</a>`;
+            message = `You have fulfilled your university language requirement. Contact the department for placement: <a href='mailto:wllinfo@southernct.edu'>wllinfo@southernct.edu</a>`;
           } else {
             const level = { "0-1": "100", "2": "101" }[val];
             message = `You should enroll in ${selectedLangCode} ${level}.`;
           }
         } else if (selectedLangCode === "SPA") {
           if (val === "3") {
-            message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 100). You should enroll in ${selectedLangCode} 200.`;
+            message = `You have fulfilled your university language requirement and earned 3 credits (${selectedLangCode} 100). You should enroll in ${selectedLangCode} 200.`;
           } else if (val === "4") {
-            message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 210.`;
+            message = `You have fulfilled your university language requirement and earned 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 210.`;
           } else if (val === "5") {
-            message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). Contact the WLL department for placement: <a href='mailto:wllinfo@southernct.edu'>wllinfo@southernct.edu</a>`;
+            message = `You have fulfilled your university language requirement and earned 3 credits (${selectedLangCode} 101). Contact the WLL department for placement: <a href='mailto:wllinfo@southernct.edu'>wllinfo@southernct.edu</a>`;
           } else {
             const level = { "0-1": "100", "2": "101" }[val];
             message = `You should enroll in ${selectedLangCode} ${level}.`;
           }
         } else {
           if (val === "3" || val === "4" || val === "5") {
-            message = "You have your university language requirement waived. No credits awarded";
+            message = "You have fulfilled your university language requirement. No credits awarded";
           } else {
             const level = { "0-1": "100", "2": "101" }[val];
             message = `You should enroll in ${selectedLangCode} ${level}.`;
@@ -496,17 +496,17 @@ select:focus {
       if (!selectedLangCode || !val) return;
 
       if ((selectedLangCode === "FRE" || selectedLangCode === "ITA") && val === "3") {
-        message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+        message = `You have fulfilled your university language requirement and earned 3 credits. (${selectedLangCode} 101)`;
       } else if ((selectedLangCode === "FRE" || selectedLangCode === "ITA") && val === "4") {
-        message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+        message = `You have fulfilled your university language requirement and earned 6 credits. (${selectedLangCode} 101 & 200)`;
       } else if (selectedLangCode === "SPA" && val === "3") {
-        message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 200.`;
+        message = `You have fulfilled your university language requirement and earned 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 200.`;
       } else if (selectedLangCode === "SPA" && val === "4") {
-        message = `You have your university language requirement waived with 6 credits (${selectedLangCode} 101 & 200). You should enroll in ${selectedLangCode} 210.`;
+        message = `You have fulfilled your university language requirement and earned 6 credits (${selectedLangCode} 101 & 200). You should enroll in ${selectedLangCode} 210.`;
       } else if (val === "3") {
-        message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+        message = `You have fulfilled your university language requirement and earned 3 credits. (${selectedLangCode} 101)`;
       } else if (val === "4") {
-        message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+        message = `You have fulfilled your university language requirement and earned 6 credits. (${selectedLangCode} 101 & 200)`;
       }
 
       $('#placeWaiverText').html(message);
@@ -524,38 +524,38 @@ select:focus {
       // 🔹 AP Logic
       if (val === "AP-3") {
         if (selectedLangCode === "SPA") {
-          message = `You have your university language requirement waived with 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 200.`;
+          message = `You have fulfilled your university language requirement and earned 3 credits (${selectedLangCode} 101). You should enroll in ${selectedLangCode} 200.`;
         } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
-          message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+          message = `You have fulfilled your university language requirement and earned 3 credits. (${selectedLangCode} 101)`;
         } else {
-          message = `You have your university language requirement waived with 3 credits. (${selectedLangCode} 101)`;
+          message = `You have fulfilled your university language requirement and earned 3 credits. (${selectedLangCode} 101)`;
         }
       } else if (val === "AP-4-5") {
         if (selectedLangCode === "SPA") {
-          message = `You have your university language requirement waived with 6 credits (${selectedLangCode} 101 & 200). You should enroll in ${selectedLangCode} 210.`;
+          message = `You have fulfilled your university language requirement and earned 6 credits (${selectedLangCode} 101 & 200). You should enroll in ${selectedLangCode} 210.`;
         } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
-          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+          message = `You have fulfilled your university language requirement and earned 6 credits. (${selectedLangCode} 101 & 200)`;
         } else {
-          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 101 & 200)`;
+          message = `You have fulfilled your university language requirement and earned 6 credits. (${selectedLangCode} 101 & 200)`;
         }
       }
 
       // 🔹 CLEP Logic
       else if (val === "CLEP-50-65") {
         if (selectedLangCode === "SPA") {
-          message = `You have your university language requirement waived with 6 credits (${selectedLangCode} 100 & 101). You should enroll in ${selectedLangCode} 200.`;
+          message = `You have fulfilled your university language requirement and earned 6 credits (${selectedLangCode} 100 & 101). You should enroll in ${selectedLangCode} 200.`;
         } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
-          message = `You have your university language requirement waived with 6 credits. (${selectedLangCode} 100 & 101)`;
+          message = `You have fulfilled your university language requirement and earned 6 credits. (${selectedLangCode} 100 & 101)`;
         } else {
-          message = `You have your university language requirement waived for 6 credits. (${selectedLangCode} 100 & 101)`;
+          message = `You have fulfilled your university language requirement and earned 6 credits. (${selectedLangCode} 100 & 101)`;
         }
       } else if (val === "CLEP-66") {
         if (selectedLangCode === "SPA") {
-          message = `You have your university language requirement waived with 9 credits (${selectedLangCode} 100, 101 & 200). You should enroll in ${selectedLangCode} 210.`;
+          message = `You have fulfilled your university language requirement and earned 9 credits (${selectedLangCode} 100, 101 & 200). You should enroll in ${selectedLangCode} 210.`;
         } else if (selectedLangCode === "FRE" || selectedLangCode === "ITA") {
-          message = `You have your university language requirement waived with 9 credits. (${selectedLangCode} 100, 101 & 200)`;
+          message = `You have fulfilled your university language requirement and earned 9 credits. (${selectedLangCode} 100, 101 & 200)`;
         } else {
-          message = `You have your university language requirement waived for 9 credits. (${selectedLangCode} 100, 101 & 200)`;
+          message = `You have fulfilled your university language requirement and earned 9 credits. (${selectedLangCode} 100, 101 & 200)`;
         }
       }
 
@@ -577,7 +577,7 @@ select:focus {
         } else if (val === "2") {
           message = `You should enroll in ${selectedLangCode} 101.`;
         } else if (val === "3" || val === "4") {
-          message = "You have your university language requirement waived.";
+          message = "You have fulfilled your university language requirement.";
         }
 
         $('#highSchoolResultText').html(message);
@@ -591,9 +591,9 @@ select:focus {
         } else if (val === "2") {
           message = `You should enroll in ${selectedLangCode} 101.`;
         } else if (val === "3") {
-          message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 200.`;
+          message = `You have fulfilled your university language requirement. You should enroll in ${selectedLangCode} 200.`;
         } else if (val === "4") {
-          message = `You have your university language requirement waived. You should enroll in a ${selectedLangCode} 200-level course.`;
+          message = `You have fulfilled your university language requirement. You should enroll in a ${selectedLangCode} 200-level course.`;
         }
       } else if (selectedLangCode === "SPA") {
         if (val === "1") {
@@ -601,9 +601,9 @@ select:focus {
         } else if (val === "2") {
           message = `You should enroll in ${selectedLangCode} 101.`;
         } else if (val === "3") {
-          message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 200.`;
+          message = `You have fulfilled your university language requirement. You should enroll in ${selectedLangCode} 200.`;
         } else if (val === "4") {
-          message = `You have your university language requirement waived. You should enroll in ${selectedLangCode} 210.`;
+          message = `You have fulfilled your university language requirement. You should enroll in ${selectedLangCode} 210.`;
         }
       } else {
         if (val === "1") {
@@ -611,7 +611,7 @@ select:focus {
         } else if (val === "2") {
           message = `You should enroll in ${selectedLangCode} 101.`;
         } else if (val === "3" || val === "4") {
-          message = "You’ve fulfilled your university language requirement. No credits are awarded.";
+          message = "You have fulfilled your university language requirement. No credits are awarded.";
         }
       }
 
