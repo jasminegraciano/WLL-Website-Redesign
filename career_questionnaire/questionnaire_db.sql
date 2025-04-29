@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 22, 2025 at 04:29 AM
+-- Generation Time: Apr 29, 2025 at 07:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -66,9 +66,9 @@ INSERT INTO `answers` (`answer_id`, `question_id`, `answer_text`) VALUES
 (26, 7, 'Team'),
 (27, 7, 'I don\'t care'),
 (28, 7, 'Alone'),
-(29, 8, 'Teach, educate, train'),
-(30, 8, 'Analyze, solve, think through'),
-(31, 8, 'Communicate, convince, organize'),
+(29, 8, 'Teaching, mentoring, and helping others learn'),
+(30, 8, 'Analyzing situations, solving problems, and thinking critically'),
+(31, 8, 'Communicating, persuading, and organizing'),
 (32, 9, 'Yes'),
 (33, 9, 'Maybe'),
 (34, 9, 'No'),
@@ -1417,16 +1417,16 @@ CREATE TABLE `questions` (
 
 INSERT INTO `questions` (`question_id`, `question_text`, `multiple_choice`) VALUES
 (1, 'What language are you learning/do you already know?', 1),
-(2, 'Which sector could you imagine yourself in?', 1),
-(3, 'Would you like to work remotely?', 0),
-(4, 'Are you a \'people\' person? (chatty, outgoing)', 0),
-(5, 'Do you like to work with texts (reading, writing, editing, etc.)?', 0),
-(6, 'Do you like to work with numbers?', 0),
-(7, 'Do you like to work in a team or do you prefer to work alone?', 0),
-(8, 'Do you like to (check all that apply):', 1),
-(9, 'Do you like to travel?', 0),
-(10, 'Do you consider yourself a problem solver?', 0),
-(11, 'Are you a leader?', 0);
+(2, 'Which industry or field can you see yourself working in?', 1),
+(3, 'Are you interested in working remotely (from home or another location)?', 0),
+(4, 'Would you describe yourself as outgoing and sociable?', 0),
+(5, 'Do you enjoy tasks that involve reading, writing, or editing text?', 0),
+(6, 'Do you enjoy working with numbers and data?', 0),
+(7, 'Do you prefer collaborating with others or working independently?', 0),
+(8, 'Which of the following activities do you enjoy? (Select all that apply):', 1),
+(9, 'Do you enjoy traveling for work or in general?', 0),
+(10, 'Do you see yourself as someone who enjoys solving problems?', 0),
+(11, 'Do you consider yourself a natural leader?', 0);
 
 --
 -- Indexes for dumped tables
