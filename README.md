@@ -1,7 +1,8 @@
 # WLL-Website-Redesign
 Group project to enhance the SCSU World Languages &amp; Literatures external website.
 
-This project consists of 3 different parts, which can be run separately. Each needed file is in its own folder.
+This project consists of 3 different parts, Language Placement, Major Merge, and Career Questionaire which can be run separately. Each needed file is in its own folder.
+Special thanks to SCSU WLL Faculty Erin Larkin (larkine3@southernct.edu) for assisting with the creation of Major Merge Data. Excel/csv file containing the data is located within assets folder.
 
 # How to run
 There's two ways to do this. You can see the older, online version by simply going to:
@@ -20,6 +21,8 @@ Major Merge:
 1. Download Major_Merge as a zip
 2. Unzip it
 3. Double click index.html, and it should open in a browser.
+4. To ensure functionality with .JSON file, make sure to host the file locally.
+(To change data, simply edit the excel/csv file, navigate to https://shancarter.github.io/mr-data-converter/, convert excel sheet to json, and replace json file with new content)
 
 Career Questionnaire:
 1. Download the career_questionnaire folder.
