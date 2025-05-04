@@ -5,9 +5,9 @@ This project consists of 3 different parts, which can be run separately. Each ne
 
 # How to run
 There's two ways to do this. You can see the older, online version by simply going to:
-https://go.southernct.edu/wll/career-questionnaire/
-https://go.southernct.edu/wll/major-merge/
-https://go.southernct.edu/wll/language-placement/
+</br>https://go.southernct.edu/wll/career-questionnaire/
+</br>https://go.southernct.edu/wll/major-merge/
+</br>https://go.southernct.edu/wll/language-placement/
 
 Or, if you want to see the most recently updated version follow these steps:
 
